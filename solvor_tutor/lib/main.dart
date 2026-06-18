@@ -8,15 +8,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'app.dart';
 import 'ai/search/offline_search.dart';
 import 'core/database/app_database.dart';
+import 'sync/sync_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final db = AppDatabase(buildConnection());
   await _loadSeedDataIfNeeded(db);
+
+  final syncService = SyncService(db, baseUrl: 'http://10.0.2.2:3000');
+  syncService.start();
+
   runApp(
     ProviderScope(
       overrides: [
         databaseProvider.overrideWithValue(db),
+        syncServiceProvider.overrideWithValue(syncService),
       ],
       child: const SolvorTutorApp(),
     ),

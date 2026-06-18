@@ -1,0 +1,22 @@
+{
+  "name": "solvor-tutor-backend",
+  "version": "1.0.0",
+  "description": "Solvor Tutor backend API — PostgreSQL + Redis sync layer",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "migrate": "node src/db/migrate.js"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "bullmq": "^5.12.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "ioredis": "^5.4.1",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.13.0",
+    "uuid": "^10.0.0"
+  }
+}
