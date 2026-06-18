@@ -16,7 +16,7 @@ class SpacedRepetitionDao extends DatabaseAccessor<AppDatabase>
     return (select(spacedRepetition)
           ..where((t) =>
               t.userId.equals(userId) &
-              t.nextReviewDate.equals(todayStr) &
+              t.nextReviewDate.isSmallerOrEqualValue(todayStr) &
               t.mastered.equals(false)))
         .get();
   }
@@ -46,7 +46,6 @@ class SpacedRepetitionDao extends DatabaseAccessor<AppDatabase>
         intervalDays: const Value(1),
         nextReviewDate: Value(tomorrowStr),
         mastered: const Value(false),
-        createdAt: Value(DateTime.now()),
       ));
     } else {
       await into(spacedRepetition).insert(SpacedRepetitionCompanion(

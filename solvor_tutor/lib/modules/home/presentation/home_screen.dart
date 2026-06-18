@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class HomeScreen extends StatelessWidget {
+import '../../../modules/error_notebook/presentation/error_notebook_provider.dart';
+
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final dueCountAsync = ref.watch(errorNotebookDueCountProvider);
+    final dueCount = dueCountAsync.asData?.value ?? 0;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Solvor Tutor'),
@@ -51,6 +57,7 @@ class HomeScreen extends StatelessWidget {
                     icon: Icons.book,
                     label: 'Error Notebook',
                     color: Colors.green,
+                    badge: dueCount > 0 ? '$dueCount' : null,
                     onTap: () => context.go('/error-notebook'),
                   ),
                   _DashboardCard(
@@ -73,12 +80,14 @@ class _DashboardCard extends StatelessWidget {
   final IconData icon;
   final String label;
   final Color color;
+  final String? badge;
   final VoidCallback onTap;
 
   const _DashboardCard({
     required this.icon,
     required this.label,
     required this.color,
+    this.badge,
     required this.onTap,
   });
 
@@ -97,7 +106,32 @@ class _DashboardCard extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, size: 48, color: color),
+              Stack(
+                children: [
+                  Icon(icon, size: 48, color: color),
+                  if (badge != null)
+                    Positioned(
+                      right: -4,
+                      top: -4,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 6, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text(
+                          badge!,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
               const SizedBox(height: 12),
               Text(
                 label,

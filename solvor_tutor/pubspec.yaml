@@ -37,3 +37,4 @@ flutter:
   assets:
     - assets/seed_data/taxonomy.json
     - assets/seed_data/seed_questions.json
+    - assets/models/intent_classifier.tflite

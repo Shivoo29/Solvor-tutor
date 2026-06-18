@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'app.dart';
+import 'ai/search/offline_search.dart';
 import 'core/database/app_database.dart';
 
 void main() async {
@@ -30,6 +31,8 @@ Future<void> _loadSeedDataIfNeeded(AppDatabase db) async {
     await _loadTaxonomy(db);
     await _loadSeedQuestions(db);
   });
+
+  await FTS5IndexBuilder(db).buildIndex();
 }
 
 Future<void> _loadTaxonomy(AppDatabase db) async {

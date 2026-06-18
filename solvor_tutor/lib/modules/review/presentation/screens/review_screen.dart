@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../data/review_repository.dart';
+import '../../../error_notebook/presentation/error_notebook_provider.dart';
 import '../review_provider.dart';
 import '../widgets/explanation_card.dart';
 
@@ -86,6 +87,9 @@ class ReviewScreen extends ConsumerWidget {
                     commonMistakeNote: q.commonMistakeNote,
                     showAddToNotebook: !isCorrect,
                     onAddToNotebook: () {
+                      ref
+                          .read(errorNotebookRepositoryProvider)
+                          .triggerSchedule(q.id);
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text('Added to Error Notebook'),
