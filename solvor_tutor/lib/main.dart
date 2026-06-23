@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:async';
 
 import 'package:drift/drift.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_gemma/flutter_gemma.dart';
 import 'package:flutter_gemma_litertlm/flutter_gemma_litertlm.dart';
+import 'package:http/http.dart' as http;
 
 import 'app.dart';
 import 'ai/search/offline_search.dart';
@@ -26,7 +28,11 @@ void main() async {
   final db = AppDatabase(buildConnection());
   await _loadSeedDataIfNeeded(db);
 
-  final apiBase = String.fromEnvironment('API_BASE', defaultValue: 'https://solvor-backend.up.railway.app');
+  final apiBase = String.fromEnvironment('API_BASE', defaultValue: 'https://solvor-tutor.onrender.com');
+
+  // Fire-and-forget wake-up ping — warms Render cold start while user sees splash
+  unawaited(http.get(Uri.parse('$apiBase/health')).catchError((_) {}));
+
   final syncService = SyncService(db, baseUrl: apiBase);
   syncService.start();
 
