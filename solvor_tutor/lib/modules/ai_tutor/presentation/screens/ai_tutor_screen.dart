@@ -81,6 +81,13 @@ class _AiTutorScreenState extends ConsumerState<AiTutorScreen> {
           onPressed: () => context.go('/home'),
         ),
         title: Text(AppStrings.get('home_ai_tutor', lang)),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.chat_bubble_outline),
+            tooltip: 'Chat with Solvy',
+            onPressed: () => context.push('/tutor-chat'),
+          ),
+        ],
       ),
       body: Column(
         children: [
