@@ -28,7 +28,7 @@ void main() async {
   final db = AppDatabase(buildConnection());
   await _loadSeedDataIfNeeded(db);
 
-  final apiBase = String.fromEnvironment('API_BASE', defaultValue: 'https://solvor-tutor.onrender.com');
+  final apiBase = String.fromEnvironment('API_BASE', defaultValue: 'https://api.solvor.co.in');
 
   // Fire-and-forget wake-up ping — warms Render cold start while user sees splash
   unawaited(http.get(Uri.parse('$apiBase/health')).catchError((_) {}));

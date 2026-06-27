@@ -173,7 +173,7 @@ class _TestScreenState extends ConsumerState<TestScreen>
                               if (session.isLastQuestion) {
                                 final testId = await notifier.submitTest();
                                 if (context.mounted) {
-                                  context.go('/review/$testId');
+                                  context.go('/debrief/$testId');
                                 }
                               } else {
                                 await notifier.submitCurrentAnswer();

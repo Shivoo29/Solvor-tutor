@@ -6,6 +6,7 @@ import '../../modules/home/presentation/home_screen.dart';
 import '../../modules/onboarding/presentation/onboarding_screen.dart';
 import '../../modules/diagnostic/presentation/diagnostic_start_screen.dart';
 import '../../modules/test_engine/presentation/screens/test_screen.dart';
+import '../../modules/test_engine/presentation/screens/test_debrief_screen.dart';
 import '../../modules/review/presentation/screens/review_screen.dart';
 import '../../modules/error_notebook/presentation/screens/error_notebook_screen.dart';
 import '../../modules/error_notebook/presentation/screens/flashcard_screen.dart';
@@ -55,6 +56,14 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state) {
           final testId = state.pathParameters['testId'] ?? '';
           return TestScreen(testId: testId);
+        },
+      ),
+      GoRoute(
+        path: '/debrief/:testId',
+        name: 'debrief',
+        builder: (context, state) {
+          final testId = state.pathParameters['testId'] ?? '';
+          return TestDebriefScreen(testId: testId);
         },
       ),
       GoRoute(
