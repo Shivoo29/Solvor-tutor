@@ -78,4 +78,12 @@ class QuestionsDao extends DatabaseAccessor<AppDatabase>
     final result = await select(questions).get();
     return result.length;
   }
+
+  Future<List<Question>> searchByKeyword(String keyword, {String language = 'en', int limit = 3}) async {
+    final lower = keyword.toLowerCase();
+    return (select(questions)
+      ..where((q) => q.questionEn.like('%$lower%') | q.taxonomyId.like('%$lower%'))
+      ..limit(limit))
+    .get();
+  }
 }

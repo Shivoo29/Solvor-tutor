@@ -11,6 +11,7 @@ import '../../modules/error_notebook/presentation/screens/error_notebook_screen.
 import '../../modules/error_notebook/presentation/screens/flashcard_screen.dart';
 import '../../modules/ai_tutor/presentation/screens/ai_tutor_screen.dart';
 import '../../modules/ai_tutor/presentation/screens/tutor_chat_screen.dart';
+import '../../modules/lesson/presentation/screens/lesson_screen.dart';
 import '../../modules/settings/settings_screen.dart';
 import '../auth/auth_state.dart';
 
@@ -85,6 +86,14 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/tutor-chat',
         name: 'tutor-chat',
         builder: (context, state) => const TutorChatScreen(),
+      ),
+      GoRoute(
+        path: '/lesson/:topic',
+        name: 'lesson',
+        builder: (context, state) {
+          final topic = state.pathParameters['topic'] ?? 'General Studies';
+          return LessonScreen(topic: topic);
+        },
       ),
       GoRoute(
         path: '/settings',
